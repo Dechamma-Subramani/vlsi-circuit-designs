@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_basic_gates_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_basic_gates" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="999,996 ps"></ZoomStartTime>
+      <ZoomEndTime time="1,000,001 ps"></ZoomEndTime>
+      <Cursor1Time time="1,000,000 ps"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="202"></NameColumnWidth>
+      <ValueColumnWidth column_width="153"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="10" />
+   <wvobject fp_name="/tb_basic_gates/a" type="logic">
+      <obj_property name="ElementShortName">a</obj_property>
+      <obj_property name="ObjectShortName">a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/b" type="logic">
+      <obj_property name="ElementShortName">b</obj_property>
+      <obj_property name="ObjectShortName">b</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/and_o" type="logic">
+      <obj_property name="ElementShortName">and_o</obj_property>
+      <obj_property name="ObjectShortName">and_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/or_o" type="logic">
+      <obj_property name="ElementShortName">or_o</obj_property>
+      <obj_property name="ObjectShortName">or_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/not_o" type="logic">
+      <obj_property name="ElementShortName">not_o</obj_property>
+      <obj_property name="ObjectShortName">not_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/nand_o" type="logic">
+      <obj_property name="ElementShortName">nand_o</obj_property>
+      <obj_property name="ObjectShortName">nand_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/nor_o" type="logic">
+      <obj_property name="ElementShortName">nor_o</obj_property>
+      <obj_property name="ObjectShortName">nor_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/xor_o" type="logic">
+      <obj_property name="ElementShortName">xor_o</obj_property>
+      <obj_property name="ObjectShortName">xor_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/nxor_o" type="logic">
+      <obj_property name="ElementShortName">nxor_o</obj_property>
+      <obj_property name="ObjectShortName">nxor_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_basic_gates/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+</wave_config>
