@@ -1,0 +1,30 @@
+Version 4
+SymbolType CELL
+LINE Normal -27 34 -36 34
+LINE Normal -20 -48 -32 -48
+LINE Normal -12 -32 -32 -32
+LINE Normal -9 -16 -32 -16
+LINE Normal -10 0 -32 0
+LINE Normal -16 16 -32 16
+LINE Normal 46 -16 64 -16
+ARC Normal -84 -63 -9 36 -32 33 -39 -63
+ARC Normal -103 -63 46 34 -29 33 -37 -63
+WINDOW 0 40 -55 Left 0
+PIN -32 -48 NONE 8
+PINATTR PinName a
+PINATTR SpiceOrder 1
+PIN -32 -32 NONE 8
+PINATTR PinName b
+PINATTR SpiceOrder 2
+PIN -32 -16 NONE 8
+PINATTR PinName c
+PINATTR SpiceOrder 3
+PIN -32 0 NONE 8
+PINATTR PinName d
+PINATTR SpiceOrder 4
+PIN -32 16 NONE 8
+PINATTR PinName e
+PINATTR SpiceOrder 5
+PIN 64 -16 NONE 8
+PINATTR PinName OR
+PINATTR SpiceOrder 6
