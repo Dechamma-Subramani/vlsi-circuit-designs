@@ -1,56 +1,35 @@
-What is a Combinational Circuit?
 
-A combinational circuit is a digital logic circuit in which the output depends only on the current inputs.
-There are:
+# VLSI Circuit Designs
 
-No memory elements
+This repository contains digital circuit and RTL design projects implemented using Verilog and simulated using Vivado and LTSpice.
 
-No clock dependency
+---
 
-No state retention
+## 📂 Projects Included
 
+### 🔹 Combinational & Sequential Logic
+- Basic gates (AND, OR, XOR, NOT)
+- Counters, flip-flops, and shift registers
+- Testbenches included for simulation
 
-What is a Sequential Logic Circuit?
+### 🔹 UART Controller
+- UART TX and RX modules
+- Simple testbench for verification
 
-A sequential logic circuit is a digital circuit whose output depends on:
+---
 
-Current inputs
+## 🛠️ Tools & Technology
 
-Previous state (memory)
+- **RTL/HDL:** Verilog  
+- **Simulation / Synthesis:** Vivado  
+- **Circuit Simulation:** LTSpice  
 
-Key Components
+---
 
-Storage elements: Latches, Flip-Flops
+## 🧪 How to Simulate
 
-Combinational logic: AND, OR, XOR, MUX
+1. Clone the repository:
 
-Clock (for synchronous circuits)
-
-ypes of Sequential Circuits
-🔹 A. Synchronous Sequential Circuits
-
-Controlled by a clock
-
-State changes only on clock edge (↑ or ↓)
-
-Examples:
-
-Counters
-
-Registers
-
-Shift registers
-
-FSMs
-
-B. Asynchronous Sequential Circuits
-
-No global clock
-
-State changes immediately with input changes
-
-Examples:
-
-Ripple counters
-
-Handshake logic
+```bash
+git clone https://github.com/Dechamma-Subramani/vlsi-circuit-designs.git
+cd vlsi-circuit-designs
