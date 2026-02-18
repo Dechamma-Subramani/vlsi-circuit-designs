@@ -1,0 +1,23 @@
+# Read all Verilog files
+read_verilog *.v
+
+# Set top module
+hierarchy -check -top apb_uart_wrapper
+
+# Generic synthesis
+proc
+opt
+fsm
+opt
+memory
+opt
+
+# Technology mapping (generic)
+techmap
+opt
+
+# Generate netlist
+write_verilog apb_uart_netlist.v
+
+# Show statistics
+stat
