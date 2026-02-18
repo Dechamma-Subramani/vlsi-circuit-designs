@@ -55,6 +55,7 @@ module tb_apb_uart;
 
     // Clock
     always #5 PCLK = ~PCLK;
+    reg [31:0] read_data;
 
     // APB write (CORRECT)
     task apb_write(input [31:0] addr, input [31:0] data);
@@ -75,6 +76,34 @@ module tb_apb_uart;
         PWRITE  <= 0;
     end
     endtask
+
+    //APB READ
+    task apb_read(
+            input  [31:0] addr,
+            output [31:0] data
+        );
+        begin
+            // SETUP
+            @(posedge PCLK);
+            PSEL    <= 1;
+            PENABLE <= 0;
+            PWRITE  <= 0;
+            PADDR   <= addr;
+
+            // ENABLE
+            @(posedge PCLK);
+            PENABLE <= 1;
+
+            // SAMPLE DATA
+            @(posedge PCLK);
+            data = PRDATA;
+
+            // COMPLETE
+            PSEL    <= 0;
+            PENABLE <= 0;
+        end
+    endtask
+
 
     initial begin
         $dumpfile("UART.vcd");
@@ -102,7 +131,7 @@ module tb_apb_uart;
 
         // wait LONG ENOUGH
         repeat(500) @(posedge PCLK);
-
+        apb_read(32'h0C, read_data);
         $display("Simulation finished");
         repeat (1000000) @(posedge PCLK);
         $finish;
@@ -110,13 +139,11 @@ module tb_apb_uart;
     
     // MONITOR (clock-aligned)
     always @(posedge PCLK) begin
-        $display("t=%0t tx_start=%b tx_busy=%b uart_tx=%b baud=%b",
-                  $time,
-                  uart_csr.tx_start,
-                  uart_tx.tx_busy,
-                  uart_tx, 
-                  baud_gen.baud_tick);
+    $display("t=%0t Received Data=%b ",
+              $time,
+              read_data);
     end
+
 
 endmodule
 

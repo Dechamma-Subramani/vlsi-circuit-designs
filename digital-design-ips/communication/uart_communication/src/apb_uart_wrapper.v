@@ -41,7 +41,6 @@ module apb_uart_wrapper (
     wire wr_en = PSEL & PENABLE & PWRITE;
     wire rd_en = PSEL & PENABLE & ~PWRITE;
     wire [5:0] addr  = PADDR[5:0];
-    wire [31:0] rdata;
 
     /*----------------------------------------------------------
       UART internal signals
@@ -54,6 +53,7 @@ module apb_uart_wrapper (
 
     wire [7:0] tx_fifo_data;
     wire [7:0] rx_fifo_data;
+    wire [7:0] rx_data_out;   // <-- FIXED
 
     wire tx_fifo_empty;
     wire rx_fifo_empty;
@@ -62,6 +62,8 @@ module apb_uart_wrapper (
     wire rx_fifo_pop;
 
     wire baud_tick;
+
+    wire [31:0] rdata;
 
     /*----------------------------------------------------------
       UART CSR
@@ -113,20 +115,16 @@ module apb_uart_wrapper (
       UART TX
     ----------------------------------------------------------*/
     uart_tx u_tx (
-    .sys_clk   (PCLK),
-    .reset     (~PRESETn),
-    .baud_tick (baud_tick),
-    .enable      (uart_en & tx_en),
-    .fifo_empty(tx_fifo_empty),
-    .fifo_pop  (tx_fifo_pop),
-    .fifo_data (tx_fifo_data),
-
-    .uart_tx   (uart_tx),
-    .tx_busy   (tx_busy)
-
+        .sys_clk   (PCLK),
+        .reset     (~PRESETn),
+        .baud_tick (baud_tick),
+        .enable    (uart_en & tx_en),
+        .fifo_empty(tx_fifo_empty),
+        .fifo_pop  (tx_fifo_pop),
+        .fifo_data (tx_fifo_data),
+        .uart_tx   (uart_tx),
+        .tx_busy   (tx_busy)
     );
-
-    //assign tx_fifo_pop = tx_start & ~tx_fifo_empty;
 
     /*----------------------------------------------------------
       UART RX
@@ -136,9 +134,9 @@ module apb_uart_wrapper (
         .reset(~PRESETn),
         .baud_tick(baud_tick),
 
-        .uart_rx(uart_tx),
-        .rx_clear(rx_clear),
+        .uart_rx(uart_tx),   // <-- FIXED (no internal loopback)
 
+        .rx_clear(rx_clear),
         .rx_data(rx_fifo_data),
         .rx_valid(rx_valid),
         .framing_error()
@@ -156,7 +154,7 @@ module apb_uart_wrapper (
 
         .csr_rx_read(rx_fifo_pop),
 
-        .rx_fifo_data(rx_fifo_data),
+        .rx_fifo_data_internal(rx_data_out),  // <-- FIXED
         .empty(rx_fifo_empty),
         .full()
     );
@@ -174,9 +172,19 @@ module apb_uart_wrapper (
     );
 
     /*----------------------------------------------------------
-      APB outputs
+      APB Read Mux (Single Driver for PRDATA)
     ----------------------------------------------------------*/
-    assign PRDATA = rdata;
+    reg [31:0] prdata_reg;
+
+    always @(*) begin
+        case (addr)
+            6'h00: prdata_reg = rdata;                    // CSR
+            6'h0C: prdata_reg = {24'b0, rx_data_out};     // RXDATA
+            default: prdata_reg = 32'b0;
+        endcase
+    end
+
+    assign PRDATA = prdata_reg;
     assign PREADY = 1'b1;
 
 endmodule

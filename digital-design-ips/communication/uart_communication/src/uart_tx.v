@@ -22,7 +22,7 @@ module uart_tx (
     input        sys_clk,
     input        reset,
     input        baud_tick,
-    input enable,
+    input        enable,
     input        fifo_empty,
     output reg   fifo_pop,
     input  [7:0] fifo_data,

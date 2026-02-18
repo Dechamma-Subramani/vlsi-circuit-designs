@@ -55,7 +55,7 @@ module tx_fifo #(
                 wr_ptr <= wr_ptr + 1'b1;
             end
 
-            if (pop && !(wr_ptr == rd_ptr)) begin
+            if (pop && !empty) begin
                 pop_data <= mem[rd_ptr[ADDR_W-1:0]];
                 rd_ptr   <= rd_ptr + 1'b1;
             end

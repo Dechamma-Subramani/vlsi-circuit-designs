@@ -78,6 +78,7 @@ module uart_csr (
                         if (uart_en && tx_en && !tx_busy)
                             tx_start <= 1; // pulse
                     end
+                    default: rx_clear <= 0;
                 endcase
             end
         end
@@ -92,6 +93,7 @@ module uart_csr (
                 6'h04: rdata = {30'b0, ~rx_fifo_empty, tx_busy};
                 6'h10: rdata = {30'b0, tx_int_en, rx_int_en};
                 6'h14: rdata = {30'b0, tx_int_pending, rx_int_pending};
+                default: rdata = 32'b0;
             endcase
         end
     end

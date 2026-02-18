@@ -31,7 +31,7 @@ module rx_fifo#(
     input  wire [7:0] rx_data,
 
     input  wire       csr_rx_read,
-    output reg  [7:0] rx_fifo_data,
+    output reg  [7:0] rx_fifo_data_internal,
 
     output wire       full,
     output wire       empty
@@ -45,22 +45,24 @@ module rx_fifo#(
                    (wr_ptr[ADDR_W-1:0] == rd_ptr[ADDR_W-1:0]);
 
     always @(posedge clk or posedge reset) begin
-    $monitor("time = %0t rx_fifo_datatate = %b full =%b csr_rx_read =%b",
-            $time, rx_fifo_data, full, csr_rx_read);
-        if (reset) begin
-            wr_ptr <= 0;
-            rd_ptr <= 0;
-        end else begin
-            if (rx_valid && !full) begin
-                mem[wr_ptr[ADDR_W-1:0]] <= rx_data;
-                wr_ptr <= wr_ptr + 1'b1;
-            end
+    if (reset) begin
+        wr_ptr <= 0;
+        rd_ptr <= 0;
+        rx_fifo_data_internal <= 0;
+    end else begin
 
-            if (csr_rx_read && !(wr_ptr == rd_ptr)) begin
-                rx_fifo_data <= mem[rd_ptr[ADDR_W-1:0]];
-                rd_ptr   <= rd_ptr + 1'b1;
-            end
+        // Write
+        if (rx_valid && !full) begin
+            mem[wr_ptr[ADDR_W-1:0]] <= rx_data;
+            wr_ptr <= wr_ptr + 1'b1;
         end
+
+        // Read
+        if (csr_rx_read && !empty) begin
+            rx_fifo_data_internal <= mem[rd_ptr[ADDR_W-1:0]];
+            rd_ptr <= rd_ptr + 1'b1;
+        end
+    end
     end
 
 endmodule
