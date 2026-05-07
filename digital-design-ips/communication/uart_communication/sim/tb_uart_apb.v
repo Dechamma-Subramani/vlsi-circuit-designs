@@ -99,7 +99,6 @@ module tb_apb_uart;
             data = PRDATA;
 
             // COMPLETE
-            PSEL    <= 0;
             PENABLE <= 0;
         end
     endtask
@@ -134,6 +133,7 @@ module tb_apb_uart;
         apb_read(32'h0C, read_data);
         $display("Simulation finished");
         repeat (1000000) @(posedge PCLK);
+        PSEL    <= 1;
         $finish;
     end
     

@@ -179,12 +179,12 @@ module apb_uart_wrapper (
     always @(*) begin
         case (addr)
             6'h00: prdata_reg = rdata;                    // CSR
-            6'h0C: prdata_reg = {24'b0, rx_data_out};     // RXDATA
+            6'h0C: prdata_reg = rx_data_out;     // RXDATA
             default: prdata_reg = 32'b0;
         endcase
     end
 
-    assign PRDATA = prdata_reg;
+    assign PRDATA = (PSEL && !PWRITE)? prdata_reg: 32'b0;
     assign PREADY = 1'b1;
 
 endmodule
